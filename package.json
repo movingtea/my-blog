@@ -9,12 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.6.0",
+    "axios": "^0.27.2",
+    "editorjs-html": "^3.4.2",
     "next": "12.1.4",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
     "eslint": "8.13.0",
-    "eslint-config-next": "12.1.4"
+    "eslint-config-next": "12.1.4",
+    "babel-plugin-styled-components": "^1.12.0"
   }
 }
