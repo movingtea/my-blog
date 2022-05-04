@@ -1,3 +1,5 @@
+import styles from '../../styles/article.module.css'
+
 import {getArticle, getArticleSlugs} from "../../libs/articles";
 import edjsHTML from 'editorjs-html'
 
