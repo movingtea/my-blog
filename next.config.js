@@ -5,7 +5,7 @@ const nextConfig = {
     webpack5: true,
   },
   env: {
-    'API_BASE_URL': 'http://192.168.0.112:1337'
+    'API_BASE_URL': 'https://loremguo.com/back-office'
   }
 }
 

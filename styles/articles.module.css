@@ -1,0 +1,63 @@
+.container {
+    background: url("/img/main_bg_14.png") no-repeat fixed;
+    background-size: cover;
+    width: auto;
+    height: auto;
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageBody {
+    background-color: #FFF;
+    border-radius: 40px;
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.2);
+    margin: 3% auto;
+    max-width: 1240px;
+    padding: 40px 70px 60px;
+    display: flex;
+    flex-flow: column;
+    position: relative;
+    flex: 0 0 100%;
+    min-height: 100vh;
+}
+
+.articleFullWidth {
+    width: 100%;
+    FONT-WEIGHT: 500;
+    height: 80vh;
+    padding-left: 4em;
+    max-height: 550px;
+}
+
+.articleHalfWidth {
+    width: 50%;
+    padding: 1em 0;
+}
+
+.featuredArticle {
+    background-color: #fff;
+    width: 38%;
+    padding: 1em;
+    height: 70%;
+}
+
+.featuredTitle {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.featuredDesc {
+    margin-top: 2em;
+    color: #A6A6A6;
+    font-size: 0.8em;
+}
+
+@media (min-width: 1421px) {
+    .pageBody {
+        width: 1320px;
+    }
+}

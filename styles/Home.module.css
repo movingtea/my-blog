@@ -133,7 +133,7 @@
 }
 
 .name {
-  font-size: 3em;
+  font-size: 2.5em;
   color: #000;
   font-weight: 500;
   line-height: 0;
@@ -142,7 +142,7 @@
 .description {
   color: #A6A6A6;
   line-height: 1.5;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .buttonContainer {
@@ -313,6 +313,7 @@
 .pastExp ul {
   margin: 0.5em auto;
 }
+
 
 @media (min-width: 1421px) {
   .pageBody {
