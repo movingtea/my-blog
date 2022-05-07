@@ -2,12 +2,11 @@ import Link from 'next/link';
 import styles from '../styles/articles.module.css'
 import {getArticlesData} from "../libs/articles";
 import HeaderBlock from "../compontents/HeaderBlock/HeaderBlock";
-import edjsHTML from 'editorjs-html'
 
 
 export default function Articles(pageData) {
-    const articlesData = JSON.parse(pageData.articles).data
-    const edjsParser = edjsHTML()
+    const articlesData = JSON.parse(pageData.articles)
+
     return (
         <div className={styles.container}>
             <div className={styles.pageBody}>
@@ -16,27 +15,32 @@ export default function Articles(pageData) {
                     articlesData.indexOf(article) === 0 || articlesData.indexOf(article) === 4 ?
                         <div key={article.id} id={articlesData.indexOf(article)} className={styles.articleFullWidth}
                              style={{
-                                 background: `url(${process.env.API_BASE_URL}${article.attributes.cover.data.attributes.url}) no-repeat`,
+                                 background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,
                                  backgroundSize: 'cover'
                              }}>
                             <div className={styles.featuredArticle}>
-                                <Link href={`/articles/${article.attributes.slug}`}>
-                                    <a className={styles.featuredTitle}>{article.attributes.title}</a>
+                                <div className={styles.featuredCategory}>
+                                    {article.category}
+                                </div>
+                                <Link href={`/articles/${article.slug}`}>
+                                    <a className={styles.featuredTitle}>{article.title}</a>
                                 </Link>
-                                <p className={styles.featuredDesc}
-                                   dangerouslySetInnerHTML={{__html: edjsParser.parse(JSON.parse(article.attributes.description)).join('')}}/>
+                                <p className={styles.articleDesc}>{article.description}</p>
+                                <span>Read more</span>
                             </div>
-
                         </div>
                         : <div key={article.id} className={styles.articleHalfWidth}>
-                            <Link href={`/articles/${article.attributes.slug}`}>
-                                <a>{article.attributes.title}</a>
-                            </Link>
-                            <p>{article.attributes.description}</p>
-                            <p>{article.attributes.cover.data ?
-                                <img src={`${process.env.API_BASE_URL}${article.attributes.cover.data.attributes.url}`}/> :
-                                <img style={{display: 'none'}}/>}
-                            </p>
+                            <div className={styles.halfWidthCover} style={{
+                                background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'
+                            }}/>
+                            <div className={styles.halfWidthContent}>
+                                <Link href={`/articles/${article.slug}`}>
+                                    <a className={styles.halfWidthContentTitle}>{article.title}</a>
+                                </Link>
+                                <p className={styles.articleDesc}>{article.description}</p>
+                            </div>
                         </div>
                 ))}
             </div>
