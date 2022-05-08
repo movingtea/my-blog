@@ -26,3 +26,10 @@
     margin-right: 8px;
     margin-top: 4px;
 }
+
+@media only screen and (min-width: 991px) {
+    .header {
+        width: 100%;
+        margin-left: 40px;
+    }
+}

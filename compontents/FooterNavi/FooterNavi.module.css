@@ -1,0 +1,39 @@
+.container {
+    height: 100%;
+}
+
+.arrowContainer {
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow {
+    width: 70%;
+    height: 70%;
+}
+
+.naviArticle {
+    display: flex;
+    align-items: center;
+}
+
+.leftNavi {
+    padding-left: 2em;
+}
+
+.rightNavi {
+    text-align: right;
+    padding-right: 2em;
+}
+
+.naviArticleTitle {
+
+}
+
+.rightNaviTitle {
+    text-align: right;
+}

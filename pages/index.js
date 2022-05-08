@@ -100,7 +100,7 @@ export default function Home(resumeData) {
                                     <div className={styles.photo}>
                                         <img
                                             src={`${process.env.API_BASE_URL}${intro.data.attributes.photo.data.attributes.url}`}
-                                            className={styles.avatar} alt={'avatar'}/>
+                                            className={styles.avatar} alt={'avatar'} loading={'lazy'}/>
                                     </div>
                                 </div>
                             </Grid>
