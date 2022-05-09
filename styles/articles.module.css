@@ -26,11 +26,21 @@
     align-items: center;
 }
 
-.articleFullWidth {
+.headerPost {
     width: 100%;
     font-weight: 500;
-    height: 80vh;
+    height: 600px;
     padding-left: 4em;
+    max-height: 550px;
+    margin: 1em 0;
+}
+
+.middlePost {
+    width: 100%;
+    font-weight: 500;
+    height: 600px;
+    padding-right: 4em;
+    padding-top: 2em;
     max-height: 550px;
     margin: 1em 0;
 }
@@ -42,11 +52,19 @@
     height: 311px;
 }
 
-.featuredArticle {
+.headerPostContent {
     background-color: #fff;
     width: 38%;
     padding: 1em;
     height: 75%;
+}
+
+.middlePostContent {
+    background-color: #fff;
+    width: 38%;
+    padding: 1em;
+    height: 75%;
+    float: right;
 }
 
 .featuredTitle, .halfWidthContentTitle {
@@ -85,6 +103,49 @@
 .publishDate {
     color: #A6A6A6;
     margin-top: 0.5em;
+}
+
+.bottomArticle {
+    width: 70%;
+    height: 177px;
+    margin: 1em 0;
+    display: flex;
+}
+
+.bottomArticleCover {
+    height: 177px;
+    width: 40%;
+}
+
+.bottomContainer {
+    width: 90%;
+    display: flex;
+}
+
+.bottomArticleContent {
+    width: 60%;
+    padding-left: 1em;
+}
+
+.bottomArticleDesc {
+    color: #A6A6A6;
+    font-size: 1em;
+    line-height: 1.3em;
+    margin-top: 1em;
+}
+
+.categoryHeader {
+    margin-top: 1em;
+}
+
+.category {
+    margin: 1em 0;
+    font-size: 0.8em;
+}
+
+.category:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media (min-width: 1421px) {

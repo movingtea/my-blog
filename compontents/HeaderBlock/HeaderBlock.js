@@ -21,7 +21,7 @@ export default function HeaderBlock() {
                         <Link href={'/articles'}>文章</Link>
                     </Grid>
                     <Grid item xs={4}>
-                        <Link href={'/career'}>简历</Link>
+                        <Link href={'/career'}>关于我</Link>
                     </Grid>
                 </Grid>
             </Grid>

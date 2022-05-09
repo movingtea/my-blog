@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import styles from '../styles/articles.module.css'
-import {getArticlesData} from "../libs/articles";
+import {filterbyCategory, getArticlesData} from "../libs/articles";
 import HeaderBlock from "../compontents/HeaderBlock/HeaderBlock";
 import {Button} from "@mui/material";
 import {useState} from "react";
 import Head from "next/head";
+// import qs from "qs";
+// import axios from "axios";
 
 export default function Articles(pageData) {
     let articlesData = JSON.parse(pageData.res).data
@@ -14,8 +16,24 @@ export default function Articles(pageData) {
         const res = await getArticlesData(pagination.page + 1)
         pagination = JSON.parse(res).pagination
         setData(articlesData.concat(JSON.parse(res).data))
-        console.log(res)
     }
+
+    const headerPost = articlesData[0]
+
+    //to-do
+    // const categories = [...new Set(data.map(article=>{
+    //     return article.category
+    // }))]
+    //
+    // console.log(categories)
+    //
+    // const showCategoryArticle = async (e)=>{
+    //     const queryText = e.target.textContent
+    //     const result = (await filterbyCategory(queryText)).data
+    //     setData(result)
+    //     console.log(result)
+    // }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -25,47 +43,118 @@ export default function Articles(pageData) {
             </Head>
             <div className={styles.pageBody}>
                 <HeaderBlock/>
-                {data.map(article => (
-                    data.indexOf(article) === 0 || data.indexOf(article) === 4 ?
-                        <div key={article.id} id={data.indexOf(article)} className={styles.articleFullWidth}
-                             style={{
-                                 background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,
-                                 backgroundSize: 'cover',
-
-                             }}>
-                            <div className={styles.featuredArticle}>
-                                <div className={styles.featuredCategory}>
-                                    {article.category}
-                                </div>
-                                <Link href={`/articles/${article.slug}`}>
-                                    <a className={styles.featuredTitle}>{article.title}</a>
-                                </Link>
-                                <div className={styles.publishDate}>
-                                    {article.publishedAt}
-                                </div>
-                                <div className={styles.articleDesc}>{article.description}</div>
-                            </div>
+                <div className={styles.headerPost}
+                     style={{
+                         background: `url(${process.env.API_BASE_URL}${headerPost.cover}) no-repeat`,
+                         backgroundSize: 'cover',
+                     }}>
+                    <div className={styles.headerPostContent}>
+                        <div className={styles.featuredCategory}>
+                            {headerPost.category}
                         </div>
-                        : <div key={article.id} className={styles.articleHalfWidth}>
-                            <div className={styles.halfWidthCover} style={{
-                                background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center'
-                            }}/>
-                            <div className={styles.halfWidthContent}>
-                                <div className={styles.featuredCategory}>
-                                    {article.category}
-                                </div>
-                                <Link href={`/articles/${article.slug}`}>
-                                    <a className={styles.halfWidthContentTitle}>{article.title}</a>
-                                </Link>
-                                <div className={styles.publishDate}>
-                                    {article.publishedAt}
-                                </div>
-                                <p className={styles.articleDesc}>{article.description}</p>
-                            </div>
+                        <Link href={`/articles/${headerPost.slug}`}>
+                            <a className={styles.featuredTitle}>{headerPost.title}</a>
+                        </Link>
+                        <div className={styles.publishDate}>
+                            {headerPost.publishedAt}
                         </div>
+                        <div className={styles.articleDesc}>{headerPost.description}</div>
+                    </div>
+                </div>
+                {data.slice(1, 4).map(article => (
+                    <div key={article.id} id={data.indexOf(article)} className={styles.articleHalfWidth}>
+                        <div className={styles.halfWidthCover} style={{
+                            background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                        }}/>
+                        <div className={styles.halfWidthContent}>
+                            <div className={styles.featuredCategory}>
+                                {article.category}
+                            </div>
+                            <Link href={`/articles/${article.slug}`}>
+                                <a className={styles.halfWidthContentTitle}>{article.title}</a>
+                            </Link>
+                            <div className={styles.publishDate}>
+                                {article.publishedAt}
+                            </div>
+                            <p className={styles.articleDesc}>{article.description}</p>
+                        </div>
+                    </div>
                 ))}
+                <div className={styles.middlePost}
+                     style={{
+                         background: `url(${process.env.API_BASE_URL}${data[4].cover}) no-repeat`,
+                         backgroundSize: 'cover',
+                     }}>
+                    <div className={styles.middlePostContent}>
+                        <div className={styles.featuredCategory}>
+                            {data[4].category}
+                        </div>
+                        <Link href={`/articles/${headerPost.slug}`}>
+                            <a className={styles.featuredTitle}>{data[4].title}</a>
+                        </Link>
+                        <div className={styles.publishDate}>
+                            {data[4].publishedAt}
+                        </div>
+                        <div className={styles.articleDesc}>{data[4].description}</div>
+                    </div>
+                </div>
+                {data.slice(5).map(article => (
+                    <div key={article.id} id={data.indexOf(article)} className={styles.articleHalfWidth}>
+                        <div className={styles.halfWidthCover} style={{
+                            background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                        }}/>
+                        <div className={styles.halfWidthContent}>
+                            <div className={styles.featuredCategory}>
+                                {article.category}
+                            </div>
+                            <Link href={`/articles/${article.slug}`}>
+                                <a className={styles.halfWidthContentTitle}>{article.title}</a>
+                            </Link>
+                            <div className={styles.publishDate}>
+                                {article.publishedAt}
+                            </div>
+                            <p className={styles.articleDesc}>{article.description}</p>
+                        </div>
+                    </div>
+                ))}
+                {/*<div className={styles.bottomContainer}>*/}
+                {/*    <div>*/}
+                {/*        {data.slice(5).map(article => (*/}
+                {/*            <div key={data.indexOf(article)} className={styles.bottomArticle}>*/}
+                {/*                <div  className={styles.bottomArticleCover} style={{*/}
+                {/*                    background: `url(${process.env.API_BASE_URL}${article.cover}) no-repeat`,*/}
+                {/*                    backgroundSize: 'cover',*/}
+                {/*                    backgroundPosition: 'center'*/}
+                {/*                }}/>*/}
+                {/*                <div className={styles.bottomArticleContent}>*/}
+                {/*                    <div className={styles.featuredCategory}>*/}
+                {/*                        {article.category}*/}
+                {/*                    </div>*/}
+                {/*                    <Link href={`/articles/${article.slug}`}>*/}
+                {/*                        <a className={styles.halfWidthContentTitle}>{article.title}</a>*/}
+                {/*                    </Link>*/}
+                {/*                    <div className={styles.publishDate}>*/}
+                {/*                        {article.publishedAt}*/}
+                {/*                    </div>*/}
+                {/*                    <p className={styles.bottomArticleDesc}>{article.description}</p>*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*        ))}*/}
+                {/*    </div>*/}
+                {/*    to-do*/}
+                {/*    <div>*/}
+                {/*        <div className={styles.categoryHeader}>类别：</div>*/}
+                {/*        {categories.map(category => (*/}
+                {/*            <div key={categories.indexOf(category)} className={styles.category} onClick={showCategoryArticle}>*/}
+                {/*                {category}*/}
+                {/*            </div>*/}
+                {/*            ))}*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 {data.length < pagination.total ? <Button onClick={loadMore}>查看更多文章</Button> : <></>}
             </div>
         </div>

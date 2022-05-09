@@ -13,7 +13,6 @@ const useStyle = makeStyles({
 })
 
 export default function FooterNavi(data) {
-    console.log('lala', data.naviData)
     const router = useRouter()
     const goToNext = () => {
         router.push(`/articles/${data.naviData.next.slug}`)
@@ -23,7 +22,7 @@ export default function FooterNavi(data) {
     }
 
     const isFirst = !data.naviData.prev.slug
-    console.log(isFirst)
+    const isLast = !data.naviData.next.slug
 
     return (
         <Grid container direction={'row'} className={styles.container}>
@@ -34,26 +33,32 @@ export default function FooterNavi(data) {
             {data.naviData.prev.slug === null
                 ? <Grid item className={`${styles.naviArticle} ${styles.leftNavi}`} xs={4}/>
                 : <Grid container item className={`${styles.naviArticle} ${styles.leftNavi}`} xs={4}>
-                    <p>上一篇文章：</p>
-                    <p>
-                        <Link href={`/articles/${data.naviData.prev.slug}`}>
-                            <a>{data.naviData.prev.title}</a>
-                        </Link>
+                    <p>上一篇文章：
+                        <span>
+                            <Link href={`/articles/${data.naviData.prev.slug}`}>
+                                <a>{data.naviData.prev.title}</a>
+                            </Link>
+                        </span>
                     </p>
                 </Grid>}
-            <Grid container item className={`${styles.naviArticle} ${styles.rightNavi}`} xs={4}
-                  direction={'row-reverse'}>
-                <div className={`${styles.naviArticleTitle} ${styles.rightNaviTitle}`}>
-                    <p>下一篇文章：</p>
-                    <p>
-                        <Link href={`/articles/${data.naviData.next.slug}`}>
-                            <a>{data.naviData.next.title}</a>
-                        </Link>
-                    </p>
-                </div>
-            </Grid>
-            <Grid item className={styles.arrowContainer} xs={2} onClick={goToNext}>
-                <ArrowForwardIosIcon className={styles.arrow} classes={{root: useStyle().Arrow}}/>
+            {data.naviData.next.slug === null
+                ? <Grid container item className={`${styles.naviArticle} ${styles.rightNavi}`} xs={4}
+                        direction={'row-reverse'}/>
+                : <Grid container item className={`${styles.naviArticle} ${styles.rightNavi}`} xs={4}
+                        direction={'row-reverse'}>
+                    <div className={`${styles.naviArticleTitle} ${styles.rightNaviTitle}`}>
+                        <p>下一篇文章：
+                            <span>
+                                <Link href={`/articles/${data.naviData.next.slug}`}>
+                                    <a>{data.naviData.next.title}</a>
+                                </Link>
+                            </span>
+                        </p>
+                    </div>
+                </Grid>
+            }
+            <Grid item className={styles.arrowContainer} xs={2} style={isLast ? {backgroundColor: '#fff'} : {}}>
+                <ArrowForwardIosIcon className={styles.arrow} classes={{root: useStyle().Arrow}} onClick={goToNext}/>
             </Grid>
         </Grid>
     )

@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 
 class Article {
     constructor(id, title, createdAt, publishedAt, description, content, slug, cover, category) {
@@ -14,6 +15,18 @@ class Article {
     }
 }
 
+const sliceWordCount = (index)=>{
+    if (index === 0) {
+        return 150
+    } else {
+        return 50
+    }
+}
+
+const sliceString = (rawData, num) => {
+    return rawData.slice(0, num - 1)
+}
+
 const articleDate = (date) => {
     const rawDate = new Date(date)
     return `${rawDate.getFullYear()} 年 ${rawDate.getMonth() + 1} 月 ${rawDate.getDate()} 日`
@@ -22,24 +35,17 @@ const articleDate = (date) => {
 export async function getArticlesData(page) {
     const results = await axios(`${process.env.API_BASE_URL}/api/posts?populate=*${page ? `&pagination[page]=${page}` : ``}&pagination[pageSize]=8&sort[0]=publishedAt%3Adesc`)
     //console.log(results.data)
-    const sliceString = (rawData, num) => {
-        return rawData.slice(0, num - 1)
-    }
-
     let articles = {
         data: [],
         pagination: {}
     }
-
     results.data.data.map(result => {
-        const sliceWordCount = results.data.data.indexOf(result) === 0 || results.data.data.indexOf(result) === 4 ? 150 : 100 //第1篇和第5篇文章截取description的前150个字符，其余文章截取前100个字符
-        //console.log(result)
         articles.data[results.data.data.indexOf(result)] = new Article(
             result.id,
             result.attributes.title,
             articleDate(result.attributes.createdAt),
             articleDate(result.attributes.publishedAt),
-            sliceString(result.attributes.description, sliceWordCount),
+            sliceString(result.attributes.description, sliceWordCount(results.data.data.indexOf(result))),
             result.attributes.content,
             result.attributes.slug,
             result.attributes.cover.data.attributes.url,
@@ -79,5 +85,41 @@ export async function getArticle(slug) {
     )
 
     return JSON.stringify(article)
+}
+
+export async function filterbyCategory(category){
+    const query = qs.stringify({
+        filters: {
+            category:{
+                category: {
+                    $eq: category
+                }
+            }
+        },
+        populate: '*'
+    }, {
+        encodeValuesOnly: true
+    })
+    const results = (await axios(`${process.env.API_BASE_URL}/api/posts?${query}` )).data
+    let filterResult = {
+        data: [],
+        pagination: {}
+    }
+
+    results.data.map(result => {
+        filterResult.data[results.data.indexOf(result)] = new Article(
+            result.id,
+            result.attributes.title,
+            articleDate(result.attributes.createdAt),
+            articleDate(result.attributes.publishedAt),
+            sliceString(result.attributes.description, sliceWordCount(results.data.indexOf(result))),
+            result.attributes.content,
+            result.attributes.slug,
+            result.attributes.cover.data.attributes.url,
+            result.attributes.category.data.attributes.category,
+        )
+    })
+    //console.log(filterResult)
+    return filterResult
 }
 

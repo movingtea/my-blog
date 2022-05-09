@@ -1,12 +1,26 @@
 import axios from "axios";
+import qs from 'qs'
 
 export async function getNaviData(slug) {
-    const result = (await axios(process.env.API_BASE_URL + '/api/posts?fields[0]=title&fields[1]=slug&sort[0]=publishedAt%3Adesc')).data
+    const query = qs.stringify({
+        fields:['title', 'slug'],
+        sort: ['publishedAt:desc'],
+        pagination:{
+            start: 0,
+            limit: 100
+        }
+    }, {
+        encodeValuesOnly: true
+    })
+    //console.log(query)
+
+    const result = (await axios(`${process.env.API_BASE_URL}/api/posts?${query}` )).data
     //console.log(result)
 
     let naviDataList = {
         titles: [],
-        slugs: []
+        slugs: [],
+
     };
 
     result.data.map(data => {
@@ -22,13 +36,13 @@ export async function getNaviData(slug) {
     }
 
     const nextArticle = {
-        title: naviDataList.titles[currentArticleIdx + 1],
-        slug: naviDataList.slugs[currentArticleIdx + 1],
+        title: currentArticleIdx + 1 < result.meta.pagination.total?naviDataList.titles[currentArticleIdx + 1]:null,
+        slug: currentArticleIdx + 1 < result.meta.pagination.total?naviDataList.slugs[currentArticleIdx + 1]:null,
     }
 
     return {
         prev: prevArticle,
-        next: nextArticle
+        next: nextArticle,
     }
 
 }

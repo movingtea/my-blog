@@ -17,13 +17,14 @@
     "axios": "^0.27.2",
     "editorjs-html": "^3.4.2",
     "next": "12.1.4",
+    "qs": "^6.10.3",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "slugify": "^1.6.5"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.12.0",
     "eslint": "8.13.0",
-    "eslint-config-next": "12.1.4",
-    "babel-plugin-styled-components": "^1.12.0"
+    "eslint-config-next": "12.1.4"
   }
 }

@@ -8,6 +8,7 @@ import FooterNavi from "../../compontents/FooterNavi/FooterNavi";
 
 
 export default function Article(article) {
+    //console.log('lala',article)
     const articleData = JSON.parse(article.data)
     const edjsParser = edjsHTML()
     const naviData = article.naviData
@@ -57,6 +58,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({params}) {
     const data = await getArticle(params.slug)
     const naviData = await getNaviData(params.slug)
+    //console.log(naviData)
     return {
         props: {
             data: data,
