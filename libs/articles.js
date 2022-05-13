@@ -87,10 +87,10 @@ export async function getArticle(slug) {
     return JSON.stringify(article)
 }
 
-export async function filterbyCategory(category){
+export async function filterCategory(category) {
     const query = qs.stringify({
         filters: {
-            category:{
+            category: {
                 category: {
                     $eq: category
                 }
