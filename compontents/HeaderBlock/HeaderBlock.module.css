@@ -27,9 +27,26 @@
     margin-top: 4px;
 }
 
+@media only screen and (min-width: 601px) {
+    .menu {
+        width: 100%;
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .menu {
+        display: none;
+    }
+
+    .mobileMenu {
+        width: 100%;
+    }
+}
+
 @media only screen and (min-width: 991px) {
     .header {
         width: 100%;
-        margin-left: 40px;
+        /*margin-left: 40px;*/
     }
 }
