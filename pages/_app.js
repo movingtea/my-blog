@@ -10,9 +10,6 @@ function MyApp({ Component, pageProps }) {
   }, []);
   return (
       <>
-          <Head>
-              <BaiduScript/>
-          </Head>
           <Component {...pageProps} />
       </>
   )
