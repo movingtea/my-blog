@@ -19,3 +19,7 @@ a:hover {
 * {
     box-sizing: border-box;
 }
+
+p {
+    margin-block: 0;
+}

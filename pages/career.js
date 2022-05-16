@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import styles from '../styles/Career.module.css'
+import Head from 'next/head';
+import styles from '../styles/Career.module.css';
 import {useRouter} from "next/router";
-import Link from 'next/link'
+import Link from 'next/link';
 
-import HeaderBlock from '../compontents/HeaderBlock/HeaderBlock'
+import HeaderBlock from '../compontents/HeaderBlock/HeaderBlock';
 
 import {Button, Grid} from "@mui/material";
 import {ImageList, ImageListItem, makeStyles} from "@material-ui/core";
@@ -12,7 +12,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import {getClientsData} from "../libs/clients";
 import {getCertificates} from "../libs/certificates";
 import getExperiences from "../libs/experiences";
-import edjsHTML from 'editorjs-html'
+import edjsHTML from 'editorjs-html';
 import getIntro from "../libs/intro";
 
 const useStyle = makeStyles({
@@ -52,7 +52,7 @@ const useStyle = makeStyles({
     }
 })
 
-export default function Home(resumeData) {
+export default function Career(resumeData) {
     const edjsParser = edjsHTML()
 
     const clients = JSON.parse(resumeData.clientsData)
