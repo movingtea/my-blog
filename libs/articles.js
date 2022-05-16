@@ -2,16 +2,17 @@ import axios from "axios";
 import qs from "qs";
 
 class Article {
-    constructor(id, title, createdAt, publishedAt, description, content, slug, cover, category) {
+    constructor(id, title, updatedAt, publishedAt, description, content, slug, cover, category, seo) {
         this.id = id
         this.title = title
-        this.createdAt = createdAt
+        this.updatedAt = updatedAt
         this.publishedAt = publishedAt
         this.description = description
         this.content = content
         this.slug = slug
         this.cover = cover
         this.category = category
+        this.seo = seo
     }
 }
 
@@ -34,7 +35,7 @@ const articleDate = (date) => {
 
 export async function getArticlesData(page) {
     const results = await axios(`${process.env.API_BASE_URL}/api/posts?populate=*${page ? `&pagination[page]=${page}` : ``}&pagination[pageSize]=8&sort[0]=publishedAt%3Adesc`)
-    //console.log(results.data)
+    console.log(results.data)
     let articles = {
         data: [],
         pagination: {}
@@ -43,7 +44,7 @@ export async function getArticlesData(page) {
         articles.data[results.data.data.indexOf(result)] = new Article(
             result.id,
             result.attributes.title,
-            articleDate(result.attributes.createdAt),
+            articleDate(result.attributes.updatedAt),
             articleDate(result.attributes.publishedAt),
             sliceString(result.attributes.description, sliceWordCount(results.data.data.indexOf(result))),
             result.attributes.content,
@@ -72,6 +73,7 @@ export async function getArticleSlugs() {
 
 export async function getArticle(slug) {
     const result = (await axios(process.env.API_BASE_URL + '/api/posts?populate=*&filters[slug][$eq]=' + slug)).data.data[0]
+    //console.log('lalala', result.attributes.seo)
     const article = new Article(
         result.id,
         result.attributes.title,
@@ -81,7 +83,8 @@ export async function getArticle(slug) {
         (result.attributes.content).replace('"url":"/', `"url":"${process.env.API_BASE_URL}/`),
         result.attributes.slug,
         result.attributes.cover.data.attributes.url,
-        result.attributes.category.data.attributes.category
+        result.attributes.category.data.attributes.category,
+        result.attributes.seo
     )
 
     return JSON.stringify(article)

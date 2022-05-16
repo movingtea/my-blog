@@ -1,12 +1,12 @@
-import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import {getArticlesData} from "../libs/articles";
 import HeaderBlock from "../compontents/HeaderBlock/HeaderBlock";
-import {Button, Grid, useMediaQuery} from "@mui/material";
+import {Button, Link, useMediaQuery} from "@mui/material";
 import {useState} from "react";
 import Head from "next/head";
 import MobileMenu from "../compontents/MobileMenu/MobileMenu";
 import ArticlesList from "../compontents/ArticlesList/ArticlesList";
+import Image from 'next/image'
 // import qs from "qs";
 // import axios from "axios";
 
@@ -21,6 +21,7 @@ export default function Articles(pageData) {
     }
 
     const headerPost = articlesData[0]
+    const isMobile = useMediaQuery('(max-width: 600px)')
 
     //to-do
     // const categories = [...new Set(data.map(article=>{
@@ -44,24 +45,26 @@ export default function Articles(pageData) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div className={styles.pageBody}>
-                <HeaderBlock/>
-                <div className={styles.headerPost}
-                     style={{
-                         background: `url(${process.env.API_BASE_URL}${headerPost.cover}) no-repeat`,
-                         backgroundSize: 'cover',
-                         backgroundPosition: 'center'
-                     }}>
-                    <Grid className={styles.mobileMenu}>
+                {isMobile
+                    ? <>
                         <MobileMenu/>
-                    </Grid>
+                    </>
+                    : <HeaderBlock/>
+                }
+                <div className={styles.headerPost}>
+                    <div className={styles.cover}>
+                        <Image src={`${process.env.API_BASE_URL}${headerPost.cover}`}
+                               layout={'fill'} objectFit={'cover'} priority={'true'} alt={headerPost.title}/>
+                    </div>
                     <div className={styles.headerPostContent}>
                         <div className={styles.featuredCategory}>
                             {headerPost.category}
                         </div>
-                        <Link href={`/articles/${headerPost.slug}`}>
-                            <a className={styles.featuredTitle}>{headerPost.title}</a>
+                        <Link href={`/articles/${headerPost.slug}`} className={styles.featuredTitle} color={'inherit'}
+                              underline={'hover'}>
+                            {headerPost.title}
                         </Link>
-                        {useMediaQuery('(max-width: 600px)')
+                        {isMobile
                             ? <></>
                             : <>
                                 <div className={styles.publishedDate}>
@@ -72,26 +75,33 @@ export default function Articles(pageData) {
                         }
                     </div>
                 </div>
-                <ArticlesList articles={data.slice(1, 4)}/>
-                <div className={styles.middlePost}
-                     style={{
-                         background: `url(${process.env.API_BASE_URL}${data[4].cover}) no-repeat`,
-                         backgroundSize: 'cover',
-                     }}>
-                    <div className={styles.middlePostContent}>
-                        <div className={styles.featuredCategory}>
-                            {data[4].category}
-                        </div>
-                        <Link href={`/articles/${headerPost.slug}`}>
-                            <a className={styles.featuredTitle}>{data[4].title}</a>
-                        </Link>
-                        <div className={styles.publishedDate}>
-                            {data[4].publishedAt}
-                        </div>
-                        <div className={styles.articleDesc}>{data[4].description}</div>
-                    </div>
-                </div>
-                <ArticlesList articles={data.slice(5)}/>
+                <ArticlesList articles={data.slice(1)}/>
+                {/*{isMobile*/}
+                {/*    ? <ArticlesList articles={data.slice(1)}/>*/}
+                {/*    : <>*/}
+                {/*        <ArticlesList articles={data.slice(1, 4)}/>*/}
+                {/*        <div className={styles.middlePost}*/}
+                {/*             style={{*/}
+                {/*                 background: `url(${process.env.API_BASE_URL}${data[4].cover}) no-repeat`,*/}
+                {/*                 backgroundSize: 'cover',*/}
+                {/*             }}>*/}
+                {/*            <div className={styles.middlePostContent}>*/}
+                {/*                <div className={styles.featuredCategory}>*/}
+                {/*                    {data[4].category}*/}
+                {/*                </div>*/}
+                {/*                <Link href={`/articles/${headerPost.slug}`} className={styles.featuredTitle}*/}
+                {/*                      color={'inherit'} underline={'hover'}>*/}
+                {/*                    {data[4].title}*/}
+                {/*                </Link>*/}
+                {/*                <div className={styles.publishedDate}>*/}
+                {/*                    {data[4].publishedAt}*/}
+                {/*                </div>*/}
+                {/*                <div className={styles.articleDesc}>{data[4].description}</div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <ArticlesList articles={data.slice(5)}/>*/}
+                {/*    </>*/}
+                {/*}*/}
                 {data.length < pagination.total ? <Button onClick={loadMore}>查看更多文章</Button> : <></>}
             </div>
         </div>
