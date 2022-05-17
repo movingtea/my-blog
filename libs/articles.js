@@ -35,7 +35,7 @@ const articleDate = (date) => {
 
 export async function getArticlesData(page) {
     const results = await axios(`${process.env.API_BASE_URL}/api/posts?populate=*${page ? `&pagination[page]=${page}` : ``}&pagination[pageSize]=8&sort[0]=publishedAt%3Adesc`)
-    console.log(results.data)
+    //console.log(results.data)
     let articles = {
         data: [],
         pagination: {}
