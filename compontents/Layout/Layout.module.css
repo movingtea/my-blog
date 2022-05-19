@@ -1,8 +1,8 @@
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .pageBody {
         width: 100vw;
         margin: 0;
-        padding: 0;
+        padding: 0 0 20px;
         display: flex;
         flex-flow: column;
         position: relative;
@@ -12,14 +12,14 @@
     }
 }
 
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 701px) {
     .pageBody {
         background-color: #FFF;
         box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.2);
         margin: 3% auto;
         width: 80vw;
         max-width: 1440px;
-        padding: 40px 20px 80px;
+        padding: 20px 20px 20px;
         display: flex;
         flex-flow: column;
         position: relative;

@@ -5,7 +5,7 @@ import {useState} from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function HeaderBlock() {
-    const isMobile = useMediaQuery('(max-width: 600px)')
+    const isMobile = useMediaQuery('(max-width: 700px)')
 
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
