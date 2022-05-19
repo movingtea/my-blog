@@ -16,20 +16,20 @@ export default function Article(article) {
     const edjsParser = edjsHTML()
     const naviData = article.naviData
 
-    const isMobile = useMediaQuery('(max-width: 600px)')
+    const isMobile = useMediaQuery('(max-width: 700px)')
 
     return (
         <div className={styles.container}>
             <Head>
-                <title>{articleData.seo.metaTitle}</title>
-                <meta name="description" content={`${articleData.seo.metaDescription}`}/>
-                <meta name="keywords" content={`${articleData.seo.keywords}`}/>
-                <link rel="icon" href="/favicon.ico"/>
-                {articleData.seo.preventindexing && (
-                    <>
-                        <meta name={'robots'} content={'noindex'}/>
-                    </>
-                )}
+                {/*<title>{articleData.seo.metaTitle}</title>*/}
+                {/*<meta name="description" content={`${articleData.seo.metaDescription}`}/>*/}
+                {/*<meta name="keywords" content={`${articleData.seo.keywords}`}/>*/}
+                {/*<link rel="icon" href="/favicon.ico"/>*/}
+                {/*{articleData.seo.preventindexing && (*/}
+                {/*    <>*/}
+                {/*        <meta name={'robots'} content={'noindex'}/>*/}
+                {/*    </>*/}
+                {/*)}*/}
             </Head>
             <div className={styles.pageBody}>
                 {isMobile
@@ -67,6 +67,7 @@ export default function Article(article) {
 
 export async function getStaticPaths() {
     const paths = await getArticleSlugs()
+    //console.log(paths)
     return {
         paths,
         fallback: false
