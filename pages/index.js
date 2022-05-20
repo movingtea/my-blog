@@ -7,19 +7,24 @@ import {getArticlesData} from "../libs/articles";
 import Layout from "../compontents/Layout/Layout";
 import HeaderBlock from "../compontents/HeaderBlock/HeaderBlock";
 import ArticlesList from "../compontents/ArticlesList/ArticlesList";
+import getAllTags from "../libs/tags";
 
 export default function Articles(pageData) {
-    let articlesData = JSON.parse(pageData.res).data
-    let pagination = JSON.parse(pageData.res).pagination
+    let articlesData = JSON.parse(pageData.articles).data
+    const tags = JSON.parse(pageData.tags).data
+    const [pagination, setPagination] = useState(JSON.parse(pageData.articles).pagination)
+    const currentPage = pagination.page
     const [data, setData] = useState(articlesData)
     const loadMore = async () => {
-        const res = await getArticlesData(pagination.page + 1)
-        pagination = JSON.parse(res).pagination
-        setData(articlesData.concat(JSON.parse(res).data))
+        if (currentPage < pagination.pageCount) {
+            const res = await getArticlesData(currentPage + 1)
+            setPagination(JSON.parse(res).pagination)
+            setData(articlesData.concat(JSON.parse(res).data))
+        }
     }
 
     const headerPost = articlesData[0]
-    const isMobile = useMediaQuery('(max-width: 600px)')
+    const isMobile = useMediaQuery('(max-width: 700px)')
 
     return (
         <Container maxWidth={'xl'} disableGutters>
@@ -55,17 +60,21 @@ export default function Articles(pageData) {
                     </div>
                 </div>
                 {data.length > 1 &&
-                <ArticlesList articles={data.slice(1)}/>
+                <ArticlesList articles={data.slice(1)} tags={tags.slice(0, 14)}/>
                 }
-                {data.length < pagination.total ? <Button onClick={loadMore}>查看更多文章</Button> : <></>}
+                {currentPage < pagination.pageCount && <Button onClick={loadMore}>查看更多文章</Button>}
             </Layout>
         </Container>
     )
 }
 
 export async function getServerSideProps() {
-    const res = await getArticlesData()
+    const articles = await getArticlesData()
+    const tags = await getAllTags()
     return {
-        props: {res}
+        props: {
+            articles: articles,
+            tags: tags
+        }
     }
 }

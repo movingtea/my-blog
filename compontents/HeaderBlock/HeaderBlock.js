@@ -5,7 +5,7 @@ import {useState} from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function HeaderBlock() {
-    const isMobile = useMediaQuery('(max-width: 600px)')
+    const isMobile = useMediaQuery('(max-width: 700px)')
 
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
@@ -69,7 +69,7 @@ export default function HeaderBlock() {
                             <Link href={'/'}>首页</Link>
                         </Grid>
                         <Grid item md={2}>
-                            <Link href={'/articles'}>文章</Link>
+                            <Link href={'/tags'}>标签</Link>
                         </Grid>
                         <Grid item md={2}>
                             <Link href={'/career'}>关于我</Link>

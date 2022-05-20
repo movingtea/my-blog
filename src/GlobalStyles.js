@@ -25,7 +25,7 @@ export default function GlobalStyles() {
                  margin-block: 0;
             }
             
-            @media only screen and (min-width: 601px) {
+            @media only screen and (min-width: 701px) {
                 .container {
                     background: url("/img/main_bg_14.png") no-repeat fixed;
                     background-size: cover;

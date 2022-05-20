@@ -16,25 +16,13 @@ class Article {
     }
 }
 
-const sliceWordCount = (index)=>{
-    if (index === 0) {
-        return 150
-    } else {
-        return 50
-    }
-}
-
-const sliceString = (rawData, num) => {
-    return rawData.slice(0, num - 1)
-}
-
 const articleDate = (date) => {
     const rawDate = new Date(date)
     return `${rawDate.getFullYear()} 年 ${rawDate.getMonth() + 1} 月 ${rawDate.getDate()} 日`
 }
 
 export async function getArticlesData(page) {
-    const results = await axios(`${process.env.API_BASE_URL}/api/posts?populate=*${page ? `&pagination[page]=${page}` : ``}&pagination[pageSize]=8&sort[0]=publishedAt%3Adesc`)
+    const results = await axios(`${process.env.API_BASE_URL}/api/posts?populate=*${page ? `&pagination[page]=${page}` : ``}&pagination[pageSize]=8&sort[0]=createdAt%3Adesc`)
     //console.log(results.data)
     let articles = {
         data: [],
@@ -46,7 +34,7 @@ export async function getArticlesData(page) {
             result.attributes.title,
             articleDate(result.attributes.updatedAt),
             articleDate(result.attributes.publishedAt),
-            sliceString(result.attributes.description, sliceWordCount(results.data.data.indexOf(result))),
+            result.attributes.description,
             result.attributes.content,
             result.attributes.slug,
             result.attributes.cover.data.attributes.url,
@@ -60,12 +48,12 @@ export async function getArticlesData(page) {
 
 
 export async function getArticleSlugs() {
-    const articlesData = await axios(process.env.API_BASE_URL + '/api/posts?populate=*')
-
-    return articlesData.data.data.map(article => {
+    const totalSlugs = (await axios(`${process.env.API_BASE_URL}/api/posts?fields[0]=slug`)).data.meta.pagination.total
+    const slugs = (await axios(`${process.env.API_BASE_URL}/api/posts?fields[0]=slug&pagination[limit]=${totalSlugs}`)).data.data
+    return slugs.map(slug => {
         return {
             params: {
-                slug: article.attributes.slug
+                slug: slug.attributes.slug
             }
         }
     })
@@ -90,12 +78,12 @@ export async function getArticle(slug) {
     return JSON.stringify(article)
 }
 
-export async function filterCategory(category) {
+export async function filterTag(tag) {
     const query = qs.stringify({
         filters: {
-            category: {
-                category: {
-                    $eq: category
+            tags: {
+                tag: {
+                    $eq: tag
                 }
             }
         },
@@ -104,6 +92,7 @@ export async function filterCategory(category) {
         encodeValuesOnly: true
     })
     const results = (await axios(`${process.env.API_BASE_URL}/api/posts?${query}` )).data
+    //console.log(results.meta)
     let filterResult = {
         data: [],
         pagination: {}
@@ -115,14 +104,15 @@ export async function filterCategory(category) {
             result.attributes.title,
             articleDate(result.attributes.createdAt),
             articleDate(result.attributes.publishedAt),
-            sliceString(result.attributes.description, sliceWordCount(results.data.indexOf(result))),
+            result.attributes.description,
             result.attributes.content,
             result.attributes.slug,
             result.attributes.cover.data.attributes.url,
             result.attributes.category.data.attributes.category,
         )
     })
-    //console.log(filterResult)
+    filterResult.pagination = results.meta.pagination
+    console.log(filterResult)
     return filterResult
 }
 
