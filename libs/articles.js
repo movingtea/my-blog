@@ -78,12 +78,12 @@ export async function getArticle(slug) {
     return JSON.stringify(article)
 }
 
-export async function filterCategory(category) {
+export async function filterTag(tag) {
     const query = qs.stringify({
         filters: {
-            category: {
-                category: {
-                    $eq: category
+            tags: {
+                tag: {
+                    $eq: tag
                 }
             }
         },
@@ -92,6 +92,7 @@ export async function filterCategory(category) {
         encodeValuesOnly: true
     })
     const results = (await axios(`${process.env.API_BASE_URL}/api/posts?${query}` )).data
+    //console.log(results.meta)
     let filterResult = {
         data: [],
         pagination: {}
@@ -103,14 +104,15 @@ export async function filterCategory(category) {
             result.attributes.title,
             articleDate(result.attributes.createdAt),
             articleDate(result.attributes.publishedAt),
-            sliceString(result.attributes.description, sliceWordCount(results.data.indexOf(result))),
+            result.attributes.description,
             result.attributes.content,
             result.attributes.slug,
             result.attributes.cover.data.attributes.url,
             result.attributes.category.data.attributes.category,
         )
     })
-    //console.log(filterResult)
+    filterResult.pagination = results.meta.pagination
+    console.log(filterResult)
     return filterResult
 }
 

@@ -2,7 +2,7 @@ import {Link, List, ListItem} from "@mui/material";
 import styles from './TagsList.module.css'
 
 export default function TagsList(data) {
-    console.log('lsls', data)
+    //console.log('lsls', data)
     return (
         <>
             <div className={styles.tagsLabel}>标签</div>

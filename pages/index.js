@@ -62,7 +62,7 @@ export default function Articles(pageData) {
                 {data.length > 1 &&
                 <ArticlesList articles={data.slice(1)} tags={tags.slice(0, 14)}/>
                 }
-                {currentPage < pagination.pageCount ? <Button onClick={loadMore}>查看更多文章</Button> : <></>}
+                {currentPage < pagination.pageCount && <Button onClick={loadMore}>查看更多文章</Button>}
             </Layout>
         </Container>
     )
