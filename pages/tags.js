@@ -1,5 +1,5 @@
 import getAllTags from "../libs/tags";
-import {Button, Chip, Container, Grid, Link} from "@mui/material";
+import {Avatar, Button, Chip, Container, Grid, Link} from "@mui/material";
 import Head from 'next/head'
 import Layout from "../compontents/Layout/Layout";
 import HeaderBlock from "../compontents/HeaderBlock/HeaderBlock";
@@ -8,26 +8,61 @@ import {useState} from "react";
 import {filterTag} from "../libs/articles";
 import {Paper} from "@material-ui/core";
 import Image from "next/image";
+import {useRouter} from "next/router";
+import SearchBar from "../compontents/SearchBar/SearchBar";
 
 export default function Tags(data) {
+    const router = useRouter()
     const topTags = (JSON.parse(data.tags).data)
-    const [selectedChip, setSelectedChip] = useState()
+    const [urlTag, setUrlTag] = useState(router.query.tag) //tag in URL query
+    const [tagToQuery, setTagToQuery] = useState(router.query.tag)
     const [filteredArticles, setFilteredArticles] = useState([])
-    const [pagination, setPagination] = useState()
-    console.log(pagination)
-    //const currentPage = pagination.page
-    const clickTag = async (e) => {
-        const selectedTag = e.target.innerText.replace(/#/g, '')
-        setSelectedChip(selectedTag)
-        const filterResult = await filterTag(selectedTag)
-        //console.log(filterResult.data)
-        setFilteredArticles(filterResult.data)
-        setPagination(filterResult.pagination)
+    const [pagination, setPagination] = useState({
+        limit: 0,
+        total: 0
+    })
+    const [startFrom, setStartFrom] = useState(0)
+
+    if (urlTag) {
+        //console.log(router.query.tag)
+        //filterByTags(tagToQuery, 0)
+        filterTag(urlTag, 0).then(result => {
+            setUrlTag(null)
+            setFilteredArticles(result.data)
+            setPagination({
+                limit: result.pagination.limit,
+                total: result.pagination.total
+            })
+        })
     }
 
-    const loadMore = async (e) => {
-
+    const handleClickTag = async (tag) => {
+        setStartFrom(0)
+        setFilteredArticles([])
+        setTagToQuery(tag)
+        await filterTag(tag, 0).then(result => {
+            setFilteredArticles(result.data)
+            setPagination({
+                limit: result.pagination.limit,
+                total: result.pagination.total
+            })
+        })
+        await router.push({
+            pathname: '/tags',
+            query: {tag: tag}
+        })
     }
+
+    const handleLoadMore = async () => {
+        if (filteredArticles.length < pagination.total) {
+            const fetchMore = await filterTag(tagToQuery, pagination.limit + startFrom)
+            console.log('get more', fetchMore)
+            console.log('total', pagination.total)
+            setStartFrom(fetchMore.pagination.limit + startFrom)
+            setFilteredArticles(filteredArticles.concat(fetchMore.data))
+        }
+    }
+
     return (
         <Container maxWidth={'xl'} disableGutters>
             <Head>
@@ -37,19 +72,21 @@ export default function Tags(data) {
             </Head>
             <HeaderBlock/>
             <Layout>
+                <SearchBar/>
                 <Grid container spacing={2} justifyContent={'center'} className={styles.tagsContainer}>
                     {topTags.map(tag => {
 
                         const numberIcon =
-                            <div className={styles.tagIcon}>
+                            <Avatar className={styles.tagIcon} sx={{pointerEvents: "none", cursor: "not-allowed"}}>
                                 {tag.usedTime}
-                            </div>
+                            </Avatar>
 
                         return (
                             <Grid item key={tag.id}>
-                                <Chip variant={selectedChip === tag.tagName ? "filled" : "outlined"}
-                                      color={selectedChip === tag.tagName ? "info" : "default"}
-                                      label={`${tag.tagName}`} icon={numberIcon} onClick={clickTag} id={tag.id}
+                                <Chip variant={tagToQuery === tag.tagName ? "filled" : "outlined"}
+                                      color={tagToQuery === tag.tagName ? "info" : "default"}
+                                      label={`${tag.tagName}`} avatar={numberIcon} id={tag.id}
+                                      onClick={() => handleClickTag(tag.tagName)}
                                       href={"#filterResult"}/>
                             </Grid>
                         )
@@ -83,7 +120,10 @@ export default function Tags(data) {
                     ))}
 
                 </Grid>
-                <Button onClick={loadMore}>查看更多</Button>
+                {filteredArticles.length < pagination.total &&
+                <Button onClick={handleLoadMore}>查看更多</Button>
+                }
+
             </Layout>
         </Container>
     )

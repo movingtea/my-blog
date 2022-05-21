@@ -78,14 +78,21 @@ export async function getArticle(slug) {
     return JSON.stringify(article)
 }
 
-export async function filterTag(tag) {
+export async function filterTag(tag, startFrom) {
+    //console.log('tag', tag)
+    //console.log('start from', startFrom)
     const query = qs.stringify({
         filters: {
             tags: {
                 tag: {
                     $eq: tag
                 }
-            }
+            },
+        },
+        sort: ['id:desc'],
+        pagination: {
+            start: startFrom,
+            limit: 9,
         },
         populate: '*'
     }, {
@@ -112,7 +119,7 @@ export async function filterTag(tag) {
         )
     })
     filterResult.pagination = results.meta.pagination
-    console.log(filterResult)
+    //console.log(filterResult)
     return filterResult
 }
 

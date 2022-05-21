@@ -6,6 +6,10 @@ import TagsList from "../TagsList/TagsList";
 export default function ArticlesList(data) {
     const isMobile = useMediaQuery('(max-width: 700px)')
     const isMd = useMediaQuery('(max-width: 900px')
+    console.log(isMd)
+    if (typeof window !== 'undefined') {
+        console.log('width', window.innerWidth)
+    }
     return (
         <>
             {data.articles.map(article => {
@@ -25,16 +29,12 @@ export default function ArticlesList(data) {
                                       color={'inherit'} underline={'hover'}>
                                     {article.title}
                                 </Link>
+                                <div className={styles.publishedDate}>
+                                    {article.publishedAt}
+                                </div>
                                 {isMobile
-                                    ? <>
-                                        <div className={styles.publishedDate}>
-                                            {article.publishedAt}
-                                        </div>
-                                    </>
+                                    ? <></>
                                     : <>
-                                        <div className={styles.publishedDate}>
-                                            {article.publishedAt}
-                                        </div>
                                         <p className={styles.articleDesc}>{article.description}</p>
                                     </>
                                 }
@@ -50,10 +50,10 @@ export default function ArticlesList(data) {
                                 <div className={styles.middlePostCoverOverlay}/>
                             </div>
                             <div className={styles.middlePostContent}>
-                                <div className={styles.featuredCategory}>
+                                <div className={styles.middlePostCategory}>
                                     {article.category}
                                 </div>
-                                <Link href={`/articles/${article.slug}`} className={styles.featuredTitle}
+                                <Link href={`/articles/${article.slug}`} className={styles.middlePostTitle}
                                       color={'inherit'} underline={'hover'}>
                                     {article.title}
                                 </Link>
@@ -112,10 +112,7 @@ export default function ArticlesList(data) {
                 <Grid container item md={4} className={styles.tagContainer}>
                     <Grid item container md={12} direction={'column'} alignItems="center">
                         <Grid item>
-                            {data.tags
-                                ? <TagsList tags={data.tags}/>
-                                : <></>
-                            }
+                            {data.tags && <TagsList tags={data.tags}/>}
                         </Grid>
                     </Grid>
                 </Grid>
