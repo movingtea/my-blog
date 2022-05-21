@@ -1,5 +1,6 @@
 .tagsContainer {
-    width: 75%
+    width: 75%;
+    margin-top: 2em;
 }
 
 .tagIcon {
@@ -11,6 +12,7 @@
     align-items: center;
     justify-content: center;
     font-size: 0.8em;
+    pointer-events: none;
 }
 
 .filterResultContainer {

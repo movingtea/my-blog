@@ -31,7 +31,7 @@ export default function TestPage() {
             <Input/>
             <Button onClick={createTags}>Create tags</Button>
             <Button onClick={createPosts}>Create posts</Button>
-            <Button onClick={getSlugs}>Get Slugs</Button>
+            {/*<Button onClick={getSlugs}>Get Slugs</Button>*/}
             <Button onClick={updatePosts}>Update Posts</Button>
         </>
     )

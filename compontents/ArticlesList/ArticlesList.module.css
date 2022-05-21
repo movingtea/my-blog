@@ -155,11 +155,11 @@
         position: relative;
     }
 
-    .halfWidthCover {
+    .halfWidthCover, .bottomArticleCover {
         width: 20vh;
     }
 
-    .halfWidthContent {
+    .halfWidthContent, .bottomArticleContent {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -167,7 +167,7 @@
         margin-left: 20vh;
     }
 
-    .halfWidthContentTitle {
+    .halfWidthContentTitle, .bottomArticleTitle {
         font-weight: bold;
         font-size: 1em;
         margin: 0.25em 0;
@@ -177,17 +177,17 @@
 
     .articleDesc {
         margin-top: 0;
+        display: none;
     }
 
-    .publishedDate {
+    .publishedDate, .bottomArticleDate {
         color: #A6A6A6;
         margin-top: 0;
         font-size: 0.7em;
     }
 
-    .featuredCategory {
+    .featuredCategory, .bottomArticleCategory {
         font-size: 0.6em;
-        color: #fff;
     }
 
     .middlePost {
@@ -200,6 +200,11 @@
         display: flex;
         align-items: center;
 
+    }
+
+    .middlePostCategory {
+        color: #fff;
+        font-size: 0.6em;
     }
 
     .middlePostContent {
@@ -227,6 +232,14 @@
         background-color: rgba(166, 166, 166, .1);
     }
 
+    .middlePostTitle {
+        font-weight: bold;
+        font-size: 2em;
+        line-height: 1.2em;
+        color: #fff;
+        display: block;
+    }
+
     .featuredTitle {
         font-weight: bold;
         font-size: 2em;
@@ -234,6 +247,18 @@
         color: #fff;
         margin-top: 0.5em;
         display: block;
+    }
+
+    .bottomArticleList {
+        padding-left: 0em;
+    }
+
+    .tagContainer {
+        display: none;
+    }
+
+    .bottomArticleContent {
+
     }
 }
 

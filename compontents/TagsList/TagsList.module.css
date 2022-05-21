@@ -7,3 +7,9 @@
     font-size: 0.89em;
 }
 
+.tag:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+

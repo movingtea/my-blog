@@ -10,16 +10,18 @@ import ArticlesList from "../compontents/ArticlesList/ArticlesList";
 import getAllTags from "../libs/tags";
 
 export default function Articles(pageData) {
+
     let articlesData = JSON.parse(pageData.articles).data
     const tags = JSON.parse(pageData.tags).data
     const [pagination, setPagination] = useState(JSON.parse(pageData.articles).pagination)
     const currentPage = pagination.page
     const [data, setData] = useState(articlesData)
+
     const loadMore = async () => {
         if (currentPage < pagination.pageCount) {
             const res = await getArticlesData(currentPage + 1)
             setPagination(JSON.parse(res).pagination)
-            setData(articlesData.concat(JSON.parse(res).data))
+            setData(data.concat(JSON.parse(res).data))
         }
     }
 
