@@ -2,7 +2,8 @@
     width: 70%;
     margin: 1em 0;
     display: flex;
-    height: 20vw;
+    height: 25vw;
+    max-height: 300px;
     align-items: center;
     position: relative;
 }
@@ -52,7 +53,8 @@
 .middlePost {
     width: 100%;
     font-weight: 500;
-    height: 30vw;
+    height: 50vw;
+    max-height: 600px;
     margin: 1em 0;
     position: relative;
     display: flex;
@@ -65,6 +67,10 @@
     position: absolute;
 }
 
+.middlePostTitle {
+    font-size: 2em;
+}
+
 .middlePostContent {
     background-color: #fff;
     width: 38%;
@@ -73,6 +79,11 @@
     float: right;
     position: absolute;
     margin-left: 55%;
+}
+
+.middlePostCategory {
+    color: #a6a6a6;
+    font-size: 1em;
 }
 
 .featuredTitle {
@@ -145,7 +156,7 @@
     padding-left: 10em;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 900px) {
     .articleHalfWidth {
         width: 90%;
         margin: 1.3em 0 1.3em;
@@ -156,7 +167,7 @@
     }
 
     .halfWidthCover, .bottomArticleCover {
-        width: 20vh;
+        width: 40vw;
     }
 
     .halfWidthContent, .bottomArticleContent {
@@ -164,7 +175,7 @@
         display: flex;
         flex-direction: column;
         padding: 0 1em 0;
-        margin-left: 20vh;
+        margin-left: 40vw;
     }
 
     .halfWidthContentTitle, .bottomArticleTitle {
@@ -256,9 +267,47 @@
     .tagContainer {
         display: none;
     }
+}
 
-    .bottomArticleContent {
+@media only screen and (max-width: 1200px) {
+    .articleHalfWidth {
+        width: 90%;
+    }
 
+    .halfWidthContentTitle {
+        font-size: 1.5em;
+    }
+
+    .publishedDate {
+        margin-top: 0;
+    }
+
+    .articleDesc {
+        margin-top: 1em;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        line-height: 1.5em;
+    }
+
+    .bottomArticleDesc {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .bottomArticle {
+        margin: 0.5em 0;
+        height: 13vw;
+    }
+
+    .bottomArticleList {
+        padding-left: 0;
     }
 }
+
+@media only screen and (max-width: 900px) {
+    .bottomArticle {
+        height: 20vw;
+    }
+}
+
 

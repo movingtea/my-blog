@@ -56,22 +56,22 @@ export default function HeaderBlock() {
                         </Grid>
                     </Grid>
                 </>
-                : <Grid container justifyContent={'center'} className={styles.menu}>
-                    <Grid item md={1}>
+                : <Grid container justifyContent={'center'} className={styles.menu} style={{width: '80%'}}>
+                    <Grid item sm={2}>
                         <div className={styles.headerContent}>
                             <div className={styles.textLogo}>
                                 <div className={styles.logoSymbol}>G</div>
                             </div>
                         </div>
                     </Grid>
-                    <Grid item container md={11} direction={"row"} alignItems={"center"}>
-                        <Grid item md={2}>
+                    <Grid item container sm={10} direction={"row"} alignItems={"center"}>
+                        <Grid item sm={2}>
                             <Link href={'/'}>首页</Link>
                         </Grid>
-                        <Grid item md={2}>
+                        <Grid item sm={2}>
                             <Link href={'/tags'}>标签</Link>
                         </Grid>
-                        <Grid item md={2}>
+                        <Grid item sm={2}>
                             <Link href={'/career'}>关于我</Link>
                         </Grid>
                     </Grid>

@@ -9,7 +9,6 @@ import {filterTag} from "../libs/articles";
 import {Paper} from "@material-ui/core";
 import Image from "next/image";
 import {useRouter} from "next/router";
-import SearchBar from "../compontents/SearchBar/SearchBar";
 
 export default function Tags(data) {
     const router = useRouter()
@@ -22,16 +21,22 @@ export default function Tags(data) {
         total: 0
     })
     const [startFrom, setStartFrom] = useState(0)
+    //const [keywords, setKeywords] = useState('')
+    // const getSearchKeyResult =(result) => {
+    //     setFilteredArticles(result.data)
+    //     setPagination({
+    //         limit: result.pagination.limit,
+    //         total: pagination.total
+    //     })
+    // }
 
     if (urlTag) {
-        //console.log(router.query.tag)
-        //filterByTags(tagToQuery, 0)
         filterTag(urlTag, 0).then(result => {
             setUrlTag(null)
-            setFilteredArticles(result.data)
+            setFilteredArticles(JSON.parse(result).data)
             setPagination({
-                limit: result.pagination.limit,
-                total: result.pagination.total
+                limit: JSON.parse(result).pagination.limit,
+                total: JSON.parse(result).pagination.total
             })
         })
     }
@@ -39,12 +44,17 @@ export default function Tags(data) {
     const handleClickTag = async (tag) => {
         setStartFrom(0)
         setFilteredArticles([])
+        setPagination({
+            limit: 0,
+            total: 0
+        })
         setTagToQuery(tag)
         await filterTag(tag, 0).then(result => {
-            setFilteredArticles(result.data)
+            //console.log('result', result)
+            setFilteredArticles(JSON.parse(result).data)
             setPagination({
-                limit: result.pagination.limit,
-                total: result.pagination.total
+                limit: JSON.parse(result).pagination.limit,
+                total: JSON.parse(result).pagination.total
             })
         })
         await router.push({
@@ -56,10 +66,10 @@ export default function Tags(data) {
     const handleLoadMore = async () => {
         if (filteredArticles.length < pagination.total) {
             const fetchMore = await filterTag(tagToQuery, pagination.limit + startFrom)
-            console.log('get more', fetchMore)
-            console.log('total', pagination.total)
-            setStartFrom(fetchMore.pagination.limit + startFrom)
-            setFilteredArticles(filteredArticles.concat(fetchMore.data))
+            //console.log('get more', fetchMore)
+            //console.log('total', pagination.total)
+            setStartFrom(JSON.parse(fetchMore).pagination.limit + startFrom)
+            setFilteredArticles(filteredArticles.concat(JSON.parse(fetchMore).data))
         }
     }
 
@@ -72,7 +82,7 @@ export default function Tags(data) {
             </Head>
             <HeaderBlock/>
             <Layout>
-                <SearchBar/>
+                {/*<SearchBar result={getSearchKeyResult}/>*/}
                 <Grid container spacing={2} justifyContent={'center'} className={styles.tagsContainer}>
                     {topTags.map(tag => {
 

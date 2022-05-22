@@ -6,50 +6,31 @@ import Head from "next/head";
 import HeaderBlock from "../../compontents/HeaderBlock/HeaderBlock";
 import FooterNavi from "../../compontents/FooterNavi/FooterNavi";
 import Image from 'next/image';
-import MobileMenu from "../../compontents/MobileMenu/MobileMenu";
-import {useMediaQuery} from "@mui/material";
+import {Container} from "@mui/material";
+import Layout from "../../compontents/Layout/Layout";
 
 
 export default function Article(article) {
-    //console.log('lala',article)
     const articleData = JSON.parse(article.data)
     const edjsParser = edjsHTML()
     const naviData = article.naviData
 
-    const isMobile = useMediaQuery('(max-width: 700px)')
 
     return (
-        <div className={styles.container}>
-            <Head>
-                {/*<title>{articleData.seo.metaTitle}</title>*/}
-                {/*<meta name="description" content={`${articleData.seo.metaDescription}`}/>*/}
-                {/*<meta name="keywords" content={`${articleData.seo.keywords}`}/>*/}
-                {/*<link rel="icon" href="/favicon.ico"/>*/}
-                {/*{articleData.seo.preventindexing && (*/}
-                {/*    <>*/}
-                {/*        <meta name={'robots'} content={'noindex'}/>*/}
-                {/*    </>*/}
-                {/*)}*/}
-            </Head>
-            <div className={styles.pageBody}>
-                {isMobile
-                    ? <>
-                        <MobileMenu/>
-                    </>
-                    : <HeaderBlock/>
-                }
+        <Container maxWidth={'xl'} disableGutters>
+            <Head></Head>
+            <HeaderBlock/>
+            <Layout>
                 <div className={styles.cover}>
                     <Image src={`${process.env.API_BASE_URL}${articleData.cover}`}
-                           layout={'fill'} objectFit={'cover'} loading={'lazy'} alt={articleData.title}/>
+                           layout={'fill'} objectFit={'cover'} priority={'true'} alt={articleData.title}/>
                 </div>
-                {/*<img className={styles.cover} src={`${process.env.API_BASE_URL}${articleData.cover}`}*/}
-                {/*     loading={'lazy'}/>*/}
                 <div className={styles.article}>
                     <h1 className={styles.title}>
                         {articleData.title}
                     </h1>
                     <div className={styles.publishedTime}>
-                        {articleData.publishedAt}
+                        {articleData.createdAt}
                     </div>
                     <div className={styles.category}>
                         {articleData.category}
@@ -60,8 +41,8 @@ export default function Article(article) {
                 <footer className={styles.footer}>
                     <FooterNavi naviData={naviData}/>
                 </footer>
-            </div>
-        </div>
+            </Layout>
+        </Container>
     )
 }
 

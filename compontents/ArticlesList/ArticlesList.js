@@ -5,8 +5,8 @@ import TagsList from "../TagsList/TagsList";
 
 export default function ArticlesList(data) {
     const isMobile = useMediaQuery('(max-width: 700px)')
-    const isMd = useMediaQuery('(max-width: 900px')
-    console.log(isMd)
+    const isLg = useMediaQuery('(max-width: 1200px')
+    //console.log(isMd)
     if (typeof window !== 'undefined') {
         console.log('width', window.innerWidth)
     }
@@ -30,7 +30,7 @@ export default function ArticlesList(data) {
                                     {article.title}
                                 </Link>
                                 <div className={styles.publishedDate}>
-                                    {article.publishedAt}
+                                    {article.createdAt}
                                 </div>
                                 {isMobile
                                     ? <></>
@@ -60,7 +60,7 @@ export default function ArticlesList(data) {
                                 {!isMobile &&
                                 <>
                                     <div className={styles.publishedDate}>
-                                        {article.publishedAt}
+                                        {article.createdAt}
                                     </div>
                                     <div className={styles.articleDesc}>{article.description}</div>
                                 </>
@@ -71,7 +71,7 @@ export default function ArticlesList(data) {
                 }
             })}
             <Grid container className={styles.bottomContainer}>
-                <Grid item container sm={12} md={7} justifyContent={'center'} className={styles.bottomArticleList}>
+                <Grid item container lg={12} justifyContent={'center'} className={styles.bottomArticleList}>
                     {data.articles.slice(4).map(article => {
                         return (
                             <Paper key={article.id} elevation={8}
@@ -90,15 +90,15 @@ export default function ArticlesList(data) {
                                           color={'inherit'} underline={'hover'}>
                                         {article.title}
                                     </Link>
-                                    {isMobile
+                                    {isLg
                                         ? <>
                                             <div className={styles.bottomArticleDate}>
-                                                {article.publishedAt}
+                                                {article.createdAt}
                                             </div>
                                         </>
                                         : <>
                                             <div className={styles.bottomArticleDate}>
-                                                {article.publishedAt}
+                                                {article.createdAt}
                                             </div>
                                             <p className={styles.bottomArticleDesc}>{article.description}</p>
                                         </>
@@ -108,7 +108,7 @@ export default function ArticlesList(data) {
                         )
                     })}
                 </Grid>
-                {!isMd &&
+                {!isLg &&
                 <Grid container item md={4} className={styles.tagContainer}>
                     <Grid item container md={12} direction={'column'} alignItems="center">
                         <Grid item>

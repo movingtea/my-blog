@@ -54,7 +54,7 @@ export default function Articles(pageData) {
                             ? <></>
                             : <>
                                 <div className={styles.publishedDate}>
-                                    {headerPost.publishedAt}
+                                    {headerPost.createdAt}
                                 </div>
                                 <div className={styles.articleDesc}>{headerPost.description}</div>
                             </>

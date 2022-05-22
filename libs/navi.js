@@ -3,9 +3,9 @@ import qs from 'qs'
 
 export async function getNaviData(slug) {
     const query = qs.stringify({
-        fields:['title', 'slug'],
-        sort: ['publishedAt:desc'],
-        pagination:{
+        fields: ['title', 'slug'],
+        sort: ['createdAt:desc'],
+        pagination: {
             start: 0,
             limit: 100
         }

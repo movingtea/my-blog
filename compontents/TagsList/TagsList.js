@@ -6,7 +6,7 @@ export default function TagsList(data) {
     const router = useRouter()
     //console.log('lsls', data)
     const handleClickTag = (e) => {
-        console.log(e)
+        //console.log(e)
         router.push({
             pathname: '/tags',
             query: {tag: e.target.innerText}
